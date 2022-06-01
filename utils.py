@@ -206,9 +206,64 @@ def plot_loss(D_cost_train, D_wass_train, D_cost_valid, D_wass_valid,
 
 
 def parse_arguments():
-    """
-    Get command line arguments
-    """
+
+    class CustomArguments:
+        def __init__(self):
+            self.model_size=64
+            self.shift_factor=2
+            self.batch_shuffle=True
+            self.post_proc_filt_len=512
+            self.alpha=0.2
+            self.valid_ratio=0.1
+            self.test_ratio=0.1
+            self.batch_size=BATCH_SIZE
+            self.num_epochs=EPOCHS
+            self.ngpus=1
+            self.latent_dim=100
+            self.epochs_per_sample=SAMPLE_EVERY
+            self.sample_size=SAMPLE_NUM
+            self.lmbda=10.0
+            self.learning_rate=1e-4
+            self.beta1=0.5
+            self.beta2=0.9
+            self.verbose=True
+            self.audio_dir=traindata
+            self.output_dir=output
+
+        def getArgs(self):
+            args = {
+                'model_size': self.model_size,
+                'shift_factor': self.shift_factor,
+                'batch_shuffle': self.batch_shuffle,
+                'post_proc_filt_len': self.post_proc_filt_len,
+                'alpha': self.alpha,
+                'valid_ratio': self.valid_ratio,
+                'test_ratio': self.test_ratio,
+                'batch_size': self.batch_size,
+                'num_epochs': self.num_epochs,
+                'ngpus': self.ngpus,
+                'latent_dim': self.latent_dim,
+                'epochs_per_sample': self.epochs_per_sample,
+                'sample_size': self.sample_size,
+                'lmbda': self.lmbda,
+                'learning_rate': self.learning_rate,
+                'beta1': self.beta1,
+                'beta2': self.beta2,
+                'verbose': self.verbose,
+                'audio_dir': self.audio_dir,
+                'output_dir': self.output_dir
+            }
+            return args
+    
+    args = CustomArguments().getArgs()
+
+    return args
+
+
+'''def parse_arguments():
+    
+    #Get command line arguments
+
     parser = argparse.ArgumentParser(description='Train a WaveGAN on a given set of audio')
 
     parser.add_argument('-ms', '--model-size', dest='model_size', type=int, default=64,
@@ -246,4 +301,4 @@ def parse_arguments():
     parser.add_argument('-audio_dir', '--audio_dir', dest='audio_dir', type=str, default=traindata, help='Path to directory containing audio files')
     parser.add_argument('-output_dir', '--output_dir', dest='output_dir', type=str, default=output, help='Path to directory where model files will be output')
     args = parser.parse_args()
-    return vars(args)
+    return vars(args)'''
